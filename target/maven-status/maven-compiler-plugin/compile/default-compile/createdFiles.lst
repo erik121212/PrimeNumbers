@@ -1,0 +1,11 @@
+akka\first\app\java\actors\MasterActor.class
+akka\first\app\java\actors\MapActor.class
+akka\first\app\java\actors\AggregateActor.class
+akka\first\app\java\messages\MapData.class
+akka\first\app\java\actors\MasterActor$1.class
+akka\first\app\java\actors\ReduceActor.class
+akka\first\app\java\messages\ReduceData.class
+akka\first\app\java\MapReduceApplication.class
+akka\first\app\java\messages\Result.class
+akka\first\app\java\actors\MasterActor$2.class
+akka\first\app\java\messages\WordCount.class
