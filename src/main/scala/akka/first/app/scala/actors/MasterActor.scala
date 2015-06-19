@@ -1,20 +1,38 @@
 package akka.first.app.scala.actors
-import akka.actor.actorRef2Scala
-import akka.actor.Actor
-import akka.actor.ActorRef
-import akka.actor.Props
-import akka.first.app.scala.Result
 
-class MasterActor extends Actor {
+import akka.actor.{Actor, ActorRef, Props}
 
-  val aggregateActor: ActorRef = context.actorOf(Props[AggregateActor], name = "aggregate")
-  val reduceActor: ActorRef = context.actorOf(Props(new ReduceActor(aggregateActor)), name = "reduce")
-  val mapActor: ActorRef = context.actorOf(Props(new MapActor(reduceActor)), name = "map")
+class MasterActor(totalIncoming: Int) extends Actor {
+  private val totalIncomingMsgs = totalIncoming
+  private var incomingMessages = 0
+  private var messagesProcessed = 0
+
+
+  // See http://www.tutorialspoint.com/scala/scala_maps.htm
+  val numberOfActors = 10
+  var actorMap:Map[Int, ActorRef] = Map()
+  for (x <- 0 to numberOfActors-1) {
+    actorMap += (x -> context.actorOf(Props(new CalcPrimeActor(self))))
+  }
+
+
+  private val start = System.currentTimeMillis()
 
   def receive: Receive = {
-    case message: String =>
-      mapActor ! message
-    case message: Result =>
-      aggregateActor ! message
+    case message: Int   =>
+      incomingMessages += 1
+      actorMap(incomingMessages % numberOfActors) ! message
+
+    case message: IsPrimeResult =>
+      messagesProcessed += 1
+      if (totalIncomingMsgs == messagesProcessed) {
+        println("Done, it took " + (System.currentTimeMillis() - start) + " milliseconds to process " + messagesProcessed + " messages")
+      }
+      if (message.isPrime)
+       println("IsPrime: " + message.primeNumber + " = " + message.isPrime)
   }
+
+
+
+
 }

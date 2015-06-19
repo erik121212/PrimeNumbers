@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FirstAkkaApplication.iml" filepath="$PROJECT_DIR$/FirstAkkaApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PrimeNumbers.iml" filepath="$PROJECT_DIR$/PrimeNumbers.iml" />
     </modules>
   </component>
 </project>
